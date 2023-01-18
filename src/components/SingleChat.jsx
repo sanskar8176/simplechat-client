@@ -20,6 +20,8 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 
 const ENDPOINT = "https://simplechat-api.onrender.com/";
+// const ENDPOINT = "http://localhost:5000/";
+// server me cors set and client me proxy 
 
 var socket, selectedChatCompare;
 
@@ -106,7 +108,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+
+    socket = io(ENDPOINT);  // server url pass if server is on differnt domain
+
     socket.emit("setup", user.user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
