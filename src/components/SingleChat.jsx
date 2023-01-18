@@ -19,7 +19,7 @@ import ScrollableChat from "./ScrollableChat";
 // for socket.io
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:3000/";
+const ENDPOINT = "https://simplechat-api.onrender.com/";
 
 var socket, selectedChatCompare;
 

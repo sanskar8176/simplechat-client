@@ -21,6 +21,7 @@ const Login = () => {
     email: "",
     password: "",
   };
+
   const [userData, setUserData] = useState(initialState);
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +46,7 @@ const Login = () => {
         },
       };
       const { data } = await axios.post(
-        "/api/users/login",
+        `/api/users/login`,
         { email, password },
         config
       );
