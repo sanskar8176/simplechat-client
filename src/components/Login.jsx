@@ -12,6 +12,7 @@ import { validateEmail } from "../Util/valid";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../Util/Serverurl";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,16 +47,21 @@ const Login = () => {
         },
       };
       const { data } = await axios.post(
-        `/api/users/login`,
+        `${API_URL}/api/users/login`,
         { email, password },
         config
       );
+      
       toast.success("User Logged In successfully");
+      console.log("login success"); 
       localStorage.setItem("simplechatUser", JSON.stringify(data));
+
       setLoading(false);
       navigate("/chats");
+      
     } catch (err) {
       toast.error("Login Failed: Either the email or password is incorrect");
+      console.log("login failed");
       setLoading(false);
       return;
     }

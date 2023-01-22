@@ -19,7 +19,8 @@ import ScrollableChat from "./ScrollableChat";
 // for socket.io
 import io from "socket.io-client";
 
-const ENDPOINT = "https://simplechat-api.onrender.com/";
+import { API_URL } from "../Util/Serverurl";
+// const ENDPOINT = "https://simplechat-api.onrender.com/";
 // const ENDPOINT = "http://localhost:5000/";
 // server me cors set and client me proxy 
 
@@ -35,6 +36,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [typing, setTyping] = useState();
   const [isTyping, setIsTyping] = useState();
 
+
   const fetchAllMessages = async () => {
     if (!selectedChat) return;
     try {
@@ -45,7 +47,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${API_URL}/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -70,7 +72,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${API_URL}/api/message`,
           {
             chatId: selectedChat._id,
             content: newMessage,
@@ -96,7 +98,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         },
       };
       await axios.post(
-        "/api/notification",
+        `${API_URL}/api/notification`,
         {
           notification: notification[0].chatId.latestMessage,
         },
@@ -109,8 +111,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
 
-    socket = io(ENDPOINT);  // server url pass if server is on differnt domain
-
+    socket = io(API_URL);  // server url pass if server is on differnt domain
+    //custom event send to server
     socket.emit("setup", user.user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
@@ -139,9 +141,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     });
   });
+  
   useEffect(() => {
     saveNotification();
   }, [notification]);
+
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
     if (!socketConnected) return;

@@ -21,6 +21,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import UserListItem from "./UserListItem";
 import Loader from "./Loader";
 import UserBadgeItem from "./UserBadgeItem";
+import { API_URL } from "../Util/Serverurl";
 
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,6 +32,8 @@ const GroupChatModal = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const { user, chats, setChats } = ChatState();
+
+
 
   const handleSearch = async (query) => {
     setSearch(query);
@@ -45,7 +48,7 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/users?search=${search}`, config);
+      const { data } = await axios.get(`${API_URL}/api/users?search=${search}`, config);
       setSearchResult(data.users);
       setLoading(false);
     } catch (err) {
@@ -96,7 +99,7 @@ const GroupChatModal = ({ children }) => {
       };
       const usersString = JSON.stringify(selectedUser.map((u) => u._id));
       const { data } = await axios.post(
-        "/api/chats/group",
+        `${API_URL}/api/chats/group`,
         { name: groupChatName, users: usersString },
         config
       );

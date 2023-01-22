@@ -18,3 +18,7 @@ root.render(
     </ChakraProvider>
   </React.StrictMode>
 );
+
+
+  // "proxy": "https://simplechat-api.onrender.com/",
+// in package.json

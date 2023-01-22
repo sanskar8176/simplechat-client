@@ -13,6 +13,7 @@ import { valid } from "../Util/valid";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Loader from "./Loader";
+import { API_URL } from "../Util/Serverurl";
 
 const Register = () => {
   const [show, setShow] = useState(false);
@@ -77,7 +78,7 @@ const Register = () => {
       };
       // console.log(name, email, password, pic);
       const { data } = await axios.post(
-        "/api/users",
+        `${API_URL}/api/users`,
         { name, email, password, pic },
         config
       );

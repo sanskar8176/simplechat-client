@@ -7,6 +7,8 @@ import { IoMdAdd, IoMdPeople } from "react-icons/io";
 import Loader from "./Loader";
 import { getSender } from "../config/ChatLogics";
 import GroupChatModal from "./GroupChatModal";
+import { API_URL } from "../Util/Serverurl";
+
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -19,7 +21,7 @@ const MyChats = ({ fetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/chats`, config);
+      const { data } = await axios.get(`${API_URL}/api/chats`, config);
       setChats(data);
     } catch (err) {
       toast.error(err);

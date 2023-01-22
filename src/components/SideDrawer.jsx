@@ -27,7 +27,8 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { toast } from "react-toastify";
 import axios from "axios";
 import NotificationBadge, { Effect } from "react-notification-badge";
-
+ import { API_URL } from "../Util/Serverurl";
+ 
 const SideDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/users?search=${search}`, config);
+      const { data } = await axios.get(`${API_URL}/api/users?search=${search}`, config);
       setSearchResult(data.users);
       setLoading(false);
     } catch (err) {
@@ -79,7 +80,8 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chats`, { userId }, config);
+      const { data } = await axios.post(`${API_URL}/api/chats`, { userId }, config);
+
       if (!chats.find((item) => item._id === data._id))
         setChats([data, ...chats]);
 
@@ -100,7 +102,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      await axios.delete(`/api/notification/${id}`, config);
+      await axios.delete(`${API_URL}/api/notification/${id}`, config);
     } catch (err) {
       toast.error(err);
     }
@@ -112,7 +114,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get("/api/notification", config);
+      const { data } = await axios.get(`${API_URL}/api/notification`, config);
       setNotification(data.map((item) => item.notificationId));
     } catch (err) {
       toast.error(err);
